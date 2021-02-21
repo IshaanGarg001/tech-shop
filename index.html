@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<script>
+
+function loadDoc() {
+
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+  
+    if (this.readyState == 4 && this.status == 200) {
+	
+    // document.getElementById("demo").innerHTML = this.responseText;
+	 console.log(this.responseText);
+	 let resp = JSON.parse(this.responseText);
+	 console.log(resp.data);
+	 let countrySelect = document.getElementById("country");
+	 
+	 resp.data.map(function(item) {
+	 
+		console.log("Code is:" + item.code + " and name is:" + item.name);		
+		
+		myOption = document.createElement("option");
+		myOption.text = item.name;
+		myOption.value = item.name;
+		countrySelect.appendChild(myOption);
+		
+	 });
+	 
+	 
+	 
+    }
+  };
+  
+  
+ // xhttp.setRequestHeader("x-rapidapi-host", "wft-geo-db.p.rapidapi.com");
+ // xhttp.setRequestHeader("useQueryString", true);
+  
+  xhttp.open("GET", "https://wft-geo-db.p.rapidapi.com/v1/geo/countries?offset=0&limit=10", true);
+  xhttp.setRequestHeader("x-rapidapi-key", "77b70ecb89mshe19dbbafe1a3a02p14ad93jsn4b97e2b7ae58");
+  xhttp.setRequestHeader("x-rapidapi-host", "wft-geo-db.p.rapidapi.com");
+  xhttp.send();
+}
+
+</script>
+<body>
+
+<div id="demo">
+  <h2>Let AJAX change this text</h2>
+  <button type="button" onclick="loadDoc()">Change Content</button>
+  
+  <select id="country">
+	<option>List</option>
+  </select>
+</div>
+
+</body>
+</html>
